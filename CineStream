@@ -1,0 +1,297 @@
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| digitalbookshelf   |
+| employeedb         |
+| information_schema |
+| mysql              |
+| performance_schema |
+| studentdb          |
+| sys                |
++--------------------+
+7 rows in set (0.626 sec)
+
+mysql> CREATE DATABASES CINESTTREAM;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DATABASES CINESTTREAM' at line 1
+mysql> CREATE DATABASE CINESTREAM;
+Query OK, 1 row affected (0.315 sec)
+
+mysql> CREATE TABLE MOVIES;
+ERROR 1046 (3D000): No database selected
+mysql> CREATE TABLE MOVIES(
+    -> MOVIE_ID INT PRIMARY KEY AUTO_INCREMENT,
+    -> TITLE VARCHAR(225) NOT NULL,
+    -> GENRE VARCHAR(225) NOT NULL,
+    -> RELEASE_YEAR INT,
+    -> RENTAL_RATE DECIMAL(5,2));
+ERROR 1046 (3D000): No database selected
+mysql> USE CINESTREAM;
+Database changed
+mysql> CREATE TABLE MOVIES
+    -> MOVIE_ID INT PRIMARY KEY AUTO_INCREMENT,
+    -> TITLE VARCHAR(225) NOT NULL,
+    -> GENRE VARCHAR(225) NOT NULL,
+    -> RELEASE_YEAR INT,
+    -> RENTAL_RATE DECIMAL(5,2));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'MOVIE_ID INT PRIMARY KEY AUTO_INCREMENT,
+TITLE VARCHAR(225) NOT NULL,
+GENRE VARC' at line 2
+mysql> CREATE TABLE MOVIES(
+    -> MOVIE_ID INT PRIMARY KEY AUTO_INCREMENT,
+    -> TITLE VARCHAR(225) NOT NULL,
+    -> GENRE VARCHAR(225) NOT NULL,
+    -> RELEASE_YEAR INT,
+    -> RENTAL_RATE DECIMAL(5,2));
+Query OK, 0 rows affected (0.765 sec)
+
+mysql> CREATE TABLE USERS(
+    -> USER_ID INT PRIMARY KEY AUTO_INCREMENT,
+    -> USERNAME VARCHAR(100) NOT NULL UNIQUE,
+    -> EMAIL VARCHAR(225) NOT NULL UNIQUE,
+    -> JOIN_DATE DATE,
+    -> STATUS VARCHAR(20));
+Query OK, 0 rows affected (0.322 sec)
+
+mysql> CREATE TABLE WatchLog (
+    ->     log_id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     user_id INT,
+    ->     movie_id INT,
+    ->     watch_date DATETIME,
+    ->     duration_minutes INT,
+    ->     FOREIGN KEY (user_id) REFERENCES Users(user_id),
+    ->     FOREIGN KEY (movie_id) REFERENCES Movies(movie_id)
+    -> );
+Query OK, 0 rows affected (0.406 sec)
+
+mysql> INSERT INTO MOVIES
+    -> VALUES
+    -> ('Interstellar', 'Sci-Fi', 2014, 4.99),
+    -> ('Inception', 'Sci-Fi', 2010, 3.99),
+    -> ('The Dark Knight', 'Action', 2008, 2.99),
+    -> ('Avengers: Endgame', 'Action', 2019, 5.99),
+    -> ('Titanic', 'Romance', 1997, 2.49),
+    -> ('The Shawshank Redemption', 'Drama', 1994, 3.49),
+    -> ('Joker', 'Drama', 2019, 4.49),
+    -> ('Frozen', 'Animation', 2013, 2.99),
+    -> ('Coco', 'Animation', 2017, 3.49),
+    -> ('The Conjuring', 'Horror', 2013, 3.99);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO MOVIES
+    -> VALUES
+    -> (1, 'Interstellar', 'Sci-Fi', 2014, 4.99),
+    -> (2, 'Inception', 'Sci-Fi', 2010, 3.99),
+    -> (3, 'The Dark Knight', 'Action', 2008, 2.99),
+    -> (4, 'Avengers: Endgame', 'Action', 2019, 5.99),
+    -> (5, 'Titanic', 'Romance', 1997, 2.49),
+    -> (6, 'The Shawshank Redemption', 'Drama', 1994, 3.49),
+    -> (7, 'Joker', 'Drama', 2019, 4.49),
+    -> (8, 'Frozen', 'Animation', 2013, 2.99),
+    -> (9, 'Coco', 'Animation', 2017, 3.49),
+    -> (10, 'The Conjuring', 'Horror', 2013, 3.99);
+Query OK, 10 rows affected (0.116 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO USERS
+    -> VALUES
+    -> (1, 'johndoe123', 'john@example.com', '2025-02-10', 'Inactive'),
+    -> (2, 'alice01', 'alice@example.com', '2025-03-15', 'Active'),
+    -> (3, 'bob22', 'bob@example.com', '2024-12-20', 'Active'),
+    -> (4, 'charlie99', 'charlie@example.com', '2025-01-25', 'Active'),
+    -> (5, 'david07', 'david@example.com', '2025-04-12', 'Inactive'),
+    -> (6, 'emma88', 'emma@example.com', '2025-05-01', 'Active'),
+    -> (7, 'frank55', 'frank@example.com', '2024-11-30', 'Active'),
+    -> (8, 'grace21', 'grace@example.com', '2025-06-05', 'Active'),
+    -> (9, 'henry10', 'henry@example.com', '2025-02-18', 'Inactive'),
+    -> (10, 'isabella77', 'isabella@example.com', '2025-03-28', 'Active');
+Query OK, 10 rows affected (0.163 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO WATCHLOG
+    -> VALUES
+    -> (1, 1, 1, '2026-01-10 18:30:00', 169),
+    -> (2, 2, 2, '2026-01-11 20:00:00', 148),
+    -> (3, 3, 3, '2026-01-12 19:15:00', 152),
+    -> (4, 4, 4, '2026-01-13 21:00:00', 181),
+    -> (5, 5, 5, '2026-01-14 17:45:00', 120),
+    -> (6, 6, 6, '2026-01-15 18:00:00', 142),
+    -> (7, 7, 7, '2026-01-16 20:30:00', 122),
+    -> (8, 8, 8, '2026-01-17 16:00:00', 102),
+    -> (9, 9, 9, '2026-01-18 15:30:00', 105),
+    -> (10, 10, 10, '2026-01-19 22:00:00', 112);
+Query OK, 10 rows affected (0.060 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *
+    -> FROM Users
+    -> WHERE join_date > '2025-01-01'
+    -> (10, 10, 10, '2026-01-19 22:00:00', 112);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(10, 10, 10, '2026-01-19 22:00:00', 112)' at line 4
+mysql> SELECT * FROM USERS
+    -> WHERE JOIN_DATE > '2025-01-01'
+    -> AND STATUS = 'ACTIVE';
++---------+------------+----------------------+------------+--------+
+| USER_ID | USERNAME   | EMAIL                | JOIN_DATE  | STATUS |
++---------+------------+----------------------+------------+--------+
+|       2 | alice01    | alice@example.com    | 2025-03-15 | Active |
+|       4 | charlie99  | charlie@example.com  | 2025-01-25 | Active |
+|       6 | emma88     | emma@example.com     | 2025-05-01 | Active |
+|       8 | grace21    | grace@example.com    | 2025-06-05 | Active |
+|      10 | isabella77 | isabella@example.com | 2025-03-28 | Active |
++---------+------------+----------------------+------------+--------+
+5 rows in set (0.160 sec)
+
+mysql> UPDATE Users
+    -> SET status = 'Active'
+    -> WHERE username = 'johndoe123';
+Query OK, 1 row affected (0.182 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM USERS;
++---------+------------+----------------------+------------+----------+
+| USER_ID | USERNAME   | EMAIL                | JOIN_DATE  | STATUS   |
++---------+------------+----------------------+------------+----------+
+|       1 | johndoe123 | john@example.com     | 2025-02-10 | Active   |
+|       2 | alice01    | alice@example.com    | 2025-03-15 | Active   |
+|       3 | bob22      | bob@example.com      | 2024-12-20 | Active   |
+|       4 | charlie99  | charlie@example.com  | 2025-01-25 | Active   |
+|       5 | david07    | david@example.com    | 2025-04-12 | Inactive |
+|       6 | emma88     | emma@example.com     | 2025-05-01 | Active   |
+|       7 | frank55    | frank@example.com    | 2024-11-30 | Active   |
+|       8 | grace21    | grace@example.com    | 2025-06-05 | Active   |
+|       9 | henry10    | henry@example.com    | 2025-02-18 | Inactive |
+|      10 | isabella77 | isabella@example.com | 2025-03-28 | Active   |
++---------+------------+----------------------+------------+----------+
+10 rows in set (0.008 sec)
+
+mysql> SELECT * FROM MOVIES;
++----------+--------------------------+-----------+--------------+-------------+
+| MOVIE_ID | TITLE                    | GENRE     | RELEASE_YEAR | RENTAL_RATE |
++----------+--------------------------+-----------+--------------+-------------+
+|        1 | Interstellar             | Sci-Fi    |         2014 |        4.99 |
+|        2 | Inception                | Sci-Fi    |         2010 |        3.99 |
+|        3 | The Dark Knight          | Action    |         2008 |        2.99 |
+|        4 | Avengers: Endgame        | Action    |         2019 |        5.99 |
+|        5 | Titanic                  | Romance   |         1997 |        2.49 |
+|        6 | The Shawshank Redemption | Drama     |         1994 |        3.49 |
+|        7 | Joker                    | Drama     |         2019 |        4.49 |
+|        8 | Frozen                   | Animation |         2013 |        2.99 |
+|        9 | Coco                     | Animation |         2017 |        3.49 |
+|       10 | The Conjuring            | Horror    |         2013 |        3.99 |
++----------+--------------------------+-----------+--------------+-------------+
+10 rows in set (0.007 sec)
+
+mysql> SELECT * FROM WATCHLOG;
++--------+---------+----------+---------------------+------------------+
+| log_id | user_id | movie_id | watch_date          | duration_minutes |
++--------+---------+----------+---------------------+------------------+
+|      1 |       1 |        1 | 2026-01-10 18:30:00 |              169 |
+|      2 |       2 |        2 | 2026-01-11 20:00:00 |              148 |
+|      3 |       3 |        3 | 2026-01-12 19:15:00 |              152 |
+|      4 |       4 |        4 | 2026-01-13 21:00:00 |              181 |
+|      5 |       5 |        5 | 2026-01-14 17:45:00 |              120 |
+|      6 |       6 |        6 | 2026-01-15 18:00:00 |              142 |
+|      7 |       7 |        7 | 2026-01-16 20:30:00 |              122 |
+|      8 |       8 |        8 | 2026-01-17 16:00:00 |              102 |
+|      9 |       9 |        9 | 2026-01-18 15:30:00 |              105 |
+|     10 |      10 |       10 | 2026-01-19 22:00:00 |              112 |
++--------+---------+----------+---------------------+------------------+
+10 rows in set (0.008 sec)
+
+mysql> DELETE FROM Users
+    -> WHERE status = 'Inactive'
+    ->   AND user_id NOT IN (
+    ->       SELECT DISTINCT user_id
+    ->       FROM WatchLog
+    ->   );
+Query OK, 0 rows affected (0.132 sec)
+
+mysql> SELECT * FROM USERS;
++---------+------------+----------------------+------------+----------+
+| USER_ID | USERNAME   | EMAIL                | JOIN_DATE  | STATUS   |
++---------+------------+----------------------+------------+----------+
+|       1 | johndoe123 | john@example.com     | 2025-02-10 | Active   |
+|       2 | alice01    | alice@example.com    | 2025-03-15 | Active   |
+|       3 | bob22      | bob@example.com      | 2024-12-20 | Active   |
+|       4 | charlie99  | charlie@example.com  | 2025-01-25 | Active   |
+|       5 | david07    | david@example.com    | 2025-04-12 | Inactive |
+|       6 | emma88     | emma@example.com     | 2025-05-01 | Active   |
+|       7 | frank55    | frank@example.com    | 2024-11-30 | Active   |
+|       8 | grace21    | grace@example.com    | 2025-06-05 | Active   |
+|       9 | henry10    | henry@example.com    | 2025-02-18 | Inactive |
+|      10 | isabella77 | isabella@example.com | 2025-03-28 | Active   |
++---------+------------+----------------------+------------+----------+
+10 rows in set (0.009 sec)
+
+mysql> SELECT
+    ->     m.genre AS Genre_Name,
+    ->     COUNT(w.log_id) AS Total_Watch_Count
+    -> FROM Movies m
+    -> INNER JOIN WatchLog w
+    ->     ON m.movie_id = w.movie_id
+    -> GROUP BY m.genre
+    -> ORDER BY Total_Watch_Count DESC;
++------------+-------------------+
+| Genre_Name | Total_Watch_Count |
++------------+-------------------+
+| Sci-Fi     |                 2 |
+| Action     |                 2 |
+| Drama      |                 2 |
+| Animation  |                 2 |
+| Romance    |                 1 |
+| Horror     |                 1 |
++------------+-------------------+
+6 rows in set (0.053 sec)
+
+mysql> SELECT * FROM MOVIES;
++----------+--------------------------+-----------+--------------+-------------+
+| MOVIE_ID | TITLE                    | GENRE     | RELEASE_YEAR | RENTAL_RATE |
++----------+--------------------------+-----------+--------------+-------------+
+|        1 | Interstellar             | Sci-Fi    |         2014 |        4.99 |
+|        2 | Inception                | Sci-Fi    |         2010 |        3.99 |
+|        3 | The Dark Knight          | Action    |         2008 |        2.99 |
+|        4 | Avengers: Endgame        | Action    |         2019 |        5.99 |
+|        5 | Titanic                  | Romance   |         1997 |        2.49 |
+|        6 | The Shawshank Redemption | Drama     |         1994 |        3.49 |
+|        7 | Joker                    | Drama     |         2019 |        4.49 |
+|        8 | Frozen                   | Animation |         2013 |        2.99 |
+|        9 | Coco                     | Animation |         2017 |        3.49 |
+|       10 | The Conjuring            | Horror    |         2013 |        3.99 |
++----------+--------------------------+-----------+--------------+-------------+
+10 rows in set (0.010 sec)
+
+mysql> SELECT * FROM USERS;
++---------+------------+----------------------+------------+----------+
+| USER_ID | USERNAME   | EMAIL                | JOIN_DATE  | STATUS   |
++---------+------------+----------------------+------------+----------+
+|       1 | johndoe123 | john@example.com     | 2025-02-10 | Active   |
+|       2 | alice01    | alice@example.com    | 2025-03-15 | Active   |
+|       3 | bob22      | bob@example.com      | 2024-12-20 | Active   |
+|       4 | charlie99  | charlie@example.com  | 2025-01-25 | Active   |
+|       5 | david07    | david@example.com    | 2025-04-12 | Inactive |
+|       6 | emma88     | emma@example.com     | 2025-05-01 | Active   |
+|       7 | frank55    | frank@example.com    | 2024-11-30 | Active   |
+|       8 | grace21    | grace@example.com    | 2025-06-05 | Active   |
+|       9 | henry10    | henry@example.com    | 2025-02-18 | Inactive |
+|      10 | isabella77 | isabella@example.com | 2025-03-28 | Active   |
++---------+------------+----------------------+------------+----------+
+10 rows in set (0.006 sec)
+
+mysql> SELECT * FROM WATCHLOG;
++--------+---------+----------+---------------------+------------------+
+| log_id | user_id | movie_id | watch_date          | duration_minutes |
++--------+---------+----------+---------------------+------------------+
+|      1 |       1 |        1 | 2026-01-10 18:30:00 |              169 |
+|      2 |       2 |        2 | 2026-01-11 20:00:00 |              148 |
+|      3 |       3 |        3 | 2026-01-12 19:15:00 |              152 |
+|      4 |       4 |        4 | 2026-01-13 21:00:00 |              181 |
+|      5 |       5 |        5 | 2026-01-14 17:45:00 |              120 |
+|      6 |       6 |        6 | 2026-01-15 18:00:00 |              142 |
+|      7 |       7 |        7 | 2026-01-16 20:30:00 |              122 |
+|      8 |       8 |        8 | 2026-01-17 16:00:00 |              102 |
+|      9 |       9 |        9 | 2026-01-18 15:30:00 |              105 |
+|     10 |      10 |       10 | 2026-01-19 22:00:00 |              112 |
++--------+---------+----------+---------------------+------------------+
+10 rows in set (0.006 sec)
+
+mysql>
